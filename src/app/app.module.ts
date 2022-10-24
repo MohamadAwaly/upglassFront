@@ -1,11 +1,17 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
+import {NgModule} from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {AppComponent} from './app.component';
+import { HeaderComponent } from './header/header.component';
+import { CocktailListComponent } from './cocktail-list/cocktail-list.component';
+import { CocktailDetailsComponent } from './cocktail-details/cocktail-details.component';
 
-import { AppComponent } from './app.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    HeaderComponent,
+    CocktailListComponent,
+    CocktailDetailsComponent
   ],
   imports: [
     BrowserModule
@@ -13,4 +19,5 @@ import { AppComponent } from './app.component';
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}
