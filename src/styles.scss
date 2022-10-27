@@ -109,6 +109,20 @@ body {
   margin-bottom: 20px;
 }
 
+.badge {
+  background-color: var(--secondary);
+  border-radius: 3px;
+  padding: 2px 5px;
+  color: white;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.active {
+  background-color: var(--secondary);
+  color: white;
+}
+
 //debug
 
 .d1 {
@@ -121,19 +135,23 @@ body {
 
 //theme
 
+.list-primary-action {
+  li {
+    &:hover {
+      background-color: var(--primary);
+      color: white;
+    }
+
+    transition: background-color 0.4S;
+  }
+}
+
 .list-primary {
   li {
     padding: 10px 15px;
     border: 1px solid var(--lightgray);
     border-top: 0;
     cursor: pointer;
-
-    &:hover {
-      background-color: var(--primary);
-      color: white;
-    }
-
-    transition: all 0.4S;
   }
 
   li:first-child {
