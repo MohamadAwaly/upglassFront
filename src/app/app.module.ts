@@ -1,10 +1,12 @@
-import {NgModule} from '@angular/core';
-import {AppComponent} from './app.component';
-import {BrowserModule} from '@angular/platform-browser';
-import {HeaderComponent} from './header/header.component';
-import {CocktailContainerComponent} from './cocktail-container/cocktail-container.component';
-import {CocktailListComponent} from './cocktail-container/cocktail-list/cocktail-list.component';
 import {CocktailDetailsComponent} from "./cocktail-container/cocktail-details/cocktail-details.component";
+import {CocktailListComponent} from './cocktail-container/cocktail-list/cocktail-list.component';
+import {CocktailContainerComponent} from './cocktail-container/cocktail-container.component';
+import {SelectedDirective} from './shared/directives/selected.directive';
+import {HeaderComponent} from './header/header.component';
+import {BrowserModule} from '@angular/platform-browser';
+import {AppComponent} from './app.component';
+import {RouterModule} from "@angular/router";
+import {NgModule} from '@angular/core';
 
 
 @NgModule({
@@ -13,7 +15,8 @@ import {CocktailDetailsComponent} from "./cocktail-container/cocktail-details/co
     HeaderComponent,
     CocktailListComponent,
     CocktailDetailsComponent,
-    CocktailContainerComponent
+    CocktailContainerComponent,
+    SelectedDirective
   ],
   imports: [
     BrowserModule
