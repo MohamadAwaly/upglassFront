@@ -19,6 +19,22 @@ a {
   color: inherit;
 }
 
+input {
+  border : 1px solid #ddd;
+  border-radius: 3px;
+  padding: 8px 15px;
+}
+
+hr {
+  margin: 20px 0px;
+  border-top: solid #ddd;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
 // delcarer des variables et on va pouvoir les utilisée dans le reste de l'application
 :root {
   --font-family: 'Roboto', sans-serif;
@@ -173,7 +189,9 @@ body {
   border-radius: 3px;
   font-weight: 700;
   cursor: pointer;
-
+  &-secondary {
+    background-color: #ddd;
+  }
   &-primary {
     background-color: var(--primary);
     color: white;
