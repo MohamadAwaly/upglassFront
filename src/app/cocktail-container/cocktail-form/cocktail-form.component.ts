@@ -11,9 +11,9 @@ import {Cocktail} from "../../shared/interfaces/cocktail";
 })
 export class CocktailFormComponent implements OnInit {
 
-  public cocktail !: Cocktail;
+  public cocktail?: Cocktail;
 
-  public cocktailForm !: FormGroup;
+  public cocktailForm: FormGroup = this.initForm();
 
 
   get ingredients() {
@@ -36,22 +36,27 @@ export class CocktailFormComponent implements OnInit {
   ngOnInit(): void {
     this._activatedRoute.paramMap.subscribe((paramMap: ParamMap) => {
       const index = paramMap.get('index');
-      if (index != null) {
+      if (index !== null) {
         this.cocktail = this._cocktailService.getCocktail(+index);
+        this.cocktailForm =  this.initForm(this.cocktail);
       }
-      this.initForm(this.cocktail);
     })
   }
 
-  private initForm(cocktail: Cocktail = {name: '', description: '', img: '', ingredients: []}): void {
-    this._fb.group({
+  private initForm(cocktail: Cocktail = {name: '', description: '', img: '', ingredients: []}): FormGroup {
+    return this._fb.group({
       name: [cocktail.name, Validators.required],
       img: [cocktail.img, Validators.required],
       description: [cocktail.description, Validators.required],
-      ingredients: this._fb.array(cocktail.ingredients.map(ingredient => this._fb.group({
-        name: [ingredient.name, Validators.required],
-        quantity: [ingredient.quantity, Validators.required],
-      })), Validators.required),
+      ingredients: this._fb.array(
+        cocktail.ingredients.map(ingredient =>
+          this._fb.group({
+            name: [ingredient.name, Validators.required],
+            quantity: [ingredient.quantity, Validators.required]
+          })
+        ),
+        Validators.required
+      )
     });
   }
 
