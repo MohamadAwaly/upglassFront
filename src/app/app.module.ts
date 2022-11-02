@@ -1,11 +1,14 @@
 //module
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {BrowserModule} from '@angular/platform-browser';
+import {HttpClientModule} from "@angular/common/http";
 import {RouterModule} from "@angular/router";
 import {NgModule} from '@angular/core';
 
 //components
 import {CocktailDetailsComponent} from "./cocktail-container/cocktail-details/cocktail-details.component";
 import {IngredientListComponent} from './panier-container/ingredient-list/ingredient-list.component';
+import { CocktailFormComponent } from './cocktail-container/cocktail-form/cocktail-form.component';
 import {CocktailListComponent} from './cocktail-container/cocktail-list/cocktail-list.component';
 import {CocktailContainerComponent} from './cocktail-container/cocktail-container.component';
 import {PanierContainerComponent} from './panier-container/panier-container.component';
@@ -15,8 +18,9 @@ import {AppComponent} from './app.component';
 
 //Routes
 import {APP_ROUTES} from "./app.routes";
-import { CocktailFormComponent } from './cocktail-container/cocktail-form/cocktail-form.component';
-import {ReactiveFormsModule} from "@angular/forms";
+
+//Pipe
+import { FilterPipe } from './shared/pipes/filter.pipe';
 
 
 @NgModule({
@@ -29,9 +33,12 @@ import {ReactiveFormsModule} from "@angular/forms";
     SelectedDirective,
     PanierContainerComponent,
     IngredientListComponent,
-    CocktailFormComponent
+    CocktailFormComponent,
+    FilterPipe
   ],
   imports: [
+    FormsModule,
+    HttpClientModule,
     BrowserModule,
     RouterModule.forRoot(APP_ROUTES),
     ReactiveFormsModule

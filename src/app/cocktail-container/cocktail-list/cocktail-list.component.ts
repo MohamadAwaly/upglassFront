@@ -9,6 +9,7 @@ import {Cocktail} from "../../shared/interfaces/cocktail";
 export class CocktailListComponent implements OnInit {
 
   @Input() public cocktails!: Cocktail[];
+  public search: string = '';
 
   constructor() {
   }

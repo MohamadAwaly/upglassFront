@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Cocktail} from "../interfaces/cocktail";
-import {BehaviorSubject} from "rxjs";
+import {BehaviorSubject, filter, map, Observable, tap} from "rxjs";
+import {HttpClient} from "@angular/common/http";
 
 @Injectable({
   providedIn: 'root'
@@ -8,82 +9,61 @@ import {BehaviorSubject} from "rxjs";
 export class CocktailService {
 
   // contient la liste des cocktails
-  public cocktails$: BehaviorSubject<Cocktail[]> = new BehaviorSubject<Cocktail[]>([
-    {
-      name: "Mojito",
-      img:
-        "https://www.hangoverweekends.co.uk/media/15505/mojito.jpg?width=500&height=375",
-      description:
-        "The Mojito complimenting summer perfectly with a fresh minty taste. The mixture of white rum, mint, lime juice," +
-        " sugar and soda water is crisp and clean with a relatively low alcohol content, the soda water can be replaced with sprite or 7-up." +
-        " When preparing a mojito always crush the mint leaves as opposed to dicing to unlock oils that will assist with enhancing the minty flavour.",
-      ingredients: [{
-        name: 'Perrier',
-        quantity: 1
-      }
-      ]
-    },
-    {
-      name: "Cosmopolitan",
-      img:
-        "https://www.hangoverweekends.co.uk/media/15507/gallery-1430408520-dmg-cosmopolitan-cocktail-001.jpg?width=330px&height=407px",
-      description:
-        "The tangy concoction of vodka, triple sec, lime juice and cranberry juice has managed to leapfrog the venerable screwdriver as" +
-        " many vodka drinkers prefer the Cosmopolitan’s cleaner and slightly tart taste. The keys to the preparation of a Cosmopolitan are a " +
-        "good brand of cranberry juice and Cointreau Triple Sec, two essential elements to the drink.",
-      ingredients: [{
-        name: 'Menthe',
-        quantity: 2
-      },
-        {
-          name: 'Rhum',
-          quantity: 3
-        },
-        {
-          name: 'Menthe2',
-          quantity: 2
-        },
-      ]
-    },
-    {
-      name: "Mai Tai",
-      img:
-        "https://www.hangoverweekends.co.uk/media/15506/mm-cocktail-guide-maitai-590x375.jpg?width=434px&height=276px",
-      description:
-        "The Mai Tai is a Polynesian-style cocktail that has a fruity tropical taste sweet and vibrant." +
-        " The mixture of light and dark rum, orange curacao, orgeat syrup and lime juice has been a symbol of Tahitian culture" +
-        " ever since the drink was first created.",
-      ingredients: [{
-        name: "Rhum",
-        quantity: 5
-      }]
-    }
-  ]);
+  public cocktails$: BehaviorSubject<Cocktail[]> = new BehaviorSubject<Cocktail[]>([]);
 
 
-  public getCocktail(index: number) {
-    const cocktails = this.cocktails$.value;
-    return cocktails[index];
-  }
-
-  public addCocktail(cocktail: Cocktail): void {
-    const value = this.cocktails$.value;
-    this.cocktails$.next([...value, cocktail])
-  }
-
-  public editCocktail(editedCocktail: Cocktail) : void{
-    const value = this.cocktails$.value;
-    this.cocktails$.next(
-      value.map((cocktail: Cocktail) => {
-        if (cocktail.name === editedCocktail.name) {
-          return editedCocktail;
-        } else {
-          return cocktail;
-        }
+  public getCocktail(index: number): Observable<Cocktail> {
+    return this.cocktails$.pipe(
+      filter((cocktails: Cocktail[]) => cocktails != null),
+      map((cocktails: Cocktail[]) => {
+        return cocktails[index];
       })
     );
   }
 
-  constructor() {
+  public addCocktail(cocktail: Cocktail): Observable<Cocktail> {
+    return this._http.post<Cocktail>('https://restapi.fr/api/cocktails', cocktail).pipe(
+      tap((savedCocktail: Cocktail) => {
+        const value = this.cocktails$.value;
+        this.cocktails$.next([...value, savedCocktail]);
+      })
+    );
+  }
+
+  public editCocktail(
+    cocktailId: string,
+    editedCocktail: Cocktail
+  ): Observable<Cocktail> {
+    return this._http
+      .patch<Cocktail>(
+        `https://restapi.fr/api/cocktails/${cocktailId}`,
+        editedCocktail
+      )
+      .pipe(
+        tap((savedCocktail: Cocktail) => {
+          this.cocktails$.next(
+            this.cocktails$.value.map((cocktail: Cocktail) => {
+              if (cocktail.name === savedCocktail.name) {
+                return savedCocktail;
+              } else {
+                return cocktail;
+              }
+            })
+          );
+        })
+      );
+  }
+
+  public fetchCocktails(): Observable<Cocktail[]> {
+    return this._http.get<Cocktail[]>("https://restapi.fr/api/cocktails").pipe(
+      tap((cocktails: Cocktail[]) => {
+        this.cocktails$.next(cocktails);
+      })
+    );
+  }
+
+  constructor(private _http: HttpClient) {
   }
 }
+
+
