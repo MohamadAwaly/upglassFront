@@ -1,8 +1,8 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Cocktail} from "../../shared/interfaces/cocktail";
-import {PanierService} from "../../shared/services/panier.service";
+import {Cocktail} from "../../../../shared/interfaces/cocktail";
+import {PanierService} from "../../../../shared/services/panier.service";
 import {ActivatedRoute, ParamMap} from "@angular/router";
-import {CocktailService} from "../../shared/services/cocktail.service";
+import {CocktailService} from "../../../../shared/services/cocktail.service";
 import {Subscription} from "rxjs";
 
 @Component({

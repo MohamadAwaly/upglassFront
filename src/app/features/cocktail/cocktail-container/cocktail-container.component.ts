@@ -1,6 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Cocktail} from "../shared/interfaces/cocktail";
-import {CocktailService} from "../shared/services/cocktail.service";
+import {Cocktail} from "../../../shared/interfaces/cocktail";
+import {CocktailService} from "../../../shared/services/cocktail.service";
 import {Subscription} from "rxjs";
 
 @Component({

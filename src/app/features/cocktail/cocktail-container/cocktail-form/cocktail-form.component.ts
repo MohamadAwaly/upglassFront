@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {FormArray, FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {CocktailService} from "../../shared/services/cocktail.service";
+import {CocktailService} from "../../../../shared/services/cocktail.service";
 import {ActivatedRoute, ParamMap, Router} from "@angular/router";
-import {Cocktail} from "../../shared/interfaces/cocktail";
+import {Cocktail} from "../../../../shared/interfaces/cocktail";
 import {first} from "rxjs";
 
 @Component({
